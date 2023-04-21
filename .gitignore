@@ -1,0 +1,10 @@
+node_modules/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/target/
+.auth/
+.env
+# IDE
+.idea/
+*.iml

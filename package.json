@@ -1,0 +1,21 @@
+{
+  "name": "playwright-typescript-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "smokeTest": "playwright test --grep @smoke --project=chromium"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.6.1",
+    "@playwright/test": "^1.32.1",
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "prettier": "^2.8.7",
+    "winston": "^3.8.2"
+  }
+}

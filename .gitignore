@@ -5,6 +5,7 @@ node_modules/
 /target/
 .auth/
 .env
+.DS_Store
 # IDE
 .idea/
 *.iml

@@ -12,7 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@axe-core/playwright": "^4.6.1",
-    "@playwright/test": "^1.32.1",
+    "@playwright/test": "^1.33.0",
     "colors": "^1.4.0",
     "dotenv": "^16.0.3",
     "prettier": "^2.8.7",

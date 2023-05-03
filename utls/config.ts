@@ -10,6 +10,8 @@ interface EnvVars {
   USER_SESSION_TIMEOUT_MS: number;
   TEST_TIMEOUT_MS: number;
   EXPECT_TIMEOUT_MS: number;
+  RP_ENABLED: boolean;
+  RP_CONFIG: object;
 }
 
 // Class for encapsulating environment variables
@@ -30,6 +32,8 @@ export class Config {
       USER_SESSION_TIMEOUT_MS: Number(process.env.USER_SESSION_TIMEOUT_MS) || 0,
       TEST_TIMEOUT_MS: Number(process.env.TEST_TIMEOUT_MS) || 0,
       EXPECT_TIMEOUT_MS: Number(process.env.EXPECT_TIMEOUT_MS) || 0,
+      RP_ENABLED: process.env.RP_ENABLED === "true" || false,
+      RP_CONFIG: JSON.parse(process.env.RP_CONFIG) || {},
     };
   }
 
@@ -64,5 +68,13 @@ export class Config {
 
   get expectTimeoutMs(): number {
     return this.envVars.EXPECT_TIMEOUT_MS;
+  }
+
+  get rpEnabled(): boolean {
+    return this.envVars.RP_ENABLED;
+  }
+
+  get rpConfig(): object {
+    return this.envVars.RP_CONFIG;
   }
 }

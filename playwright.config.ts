@@ -1,5 +1,5 @@
 import { defineConfig, devices, expect } from "@playwright/test";
-import { Config } from "./utls";
+import { Config, customMatchers } from "./utls";
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -22,9 +22,18 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  // workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+  /* with reportportal reporter. See https://github.com/reportportal/agent-js-playwright */
+  reporter: process.env.CI
+    ? "github"
+    : [
+        ["html"],
+        ["junit", { outputFile: "test-results/results.xml" }],
+        config.rpEnabled
+          ? ["@reportportal/agent-js-playwright", config.rpConfig]
+          : ["null"],
+      ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -75,12 +84,20 @@ export default defineConfig({
 
     {
       name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      use: {
+        ...devices["Desktop Firefox"],
+        storageState: ".auth/ui.login.setup.storageState.json",
+      },
+      dependencies: ["ui.login.setup"],
     },
 
     {
       name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      use: {
+        ...devices["Desktop Safari"],
+        storageState: ".auth/ui.login.setup.storageState.json",
+      },
+      dependencies: ["ui.login.setup"],
     },
 
     /* Test against mobile viewports. */
@@ -111,20 +128,4 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
-expect.extend({
-  toBeWithinRange(received: number, floor: number, ceiling: number) {
-    const pass = received >= floor && received <= ceiling;
-    if (pass) {
-      return {
-        message: () => "passed",
-        pass: true,
-      };
-    } else {
-      return {
-        message: () => "failed",
-        pass: false,
-      };
-    }
-  },
-});
+expect.extend(customMatchers);

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test --project=chromium",
+    "test": "playwright test",
     "smokeTest": "playwright test --grep @smoke --project=chromium"
   },
   "keywords": [],
@@ -13,6 +13,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.7.0",
     "@playwright/test": "^1.33.0",
+    "@reportportal/agent-js-playwright": "^5.0.11",
     "colors": "^1.4.0",
     "dotenv": "^16.0.3",
     "prettier": "^2.8.7",

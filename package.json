@@ -11,8 +11,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@axe-core/playwright": "^4.6.1",
+    "@axe-core/playwright": "^4.7.0",
     "@playwright/test": "^1.33.0",
+    "@reportportal/agent-js-playwright": "^5.0.11",
     "colors": "^1.4.0",
     "dotenv": "^16.0.3",
     "prettier": "^2.8.7",

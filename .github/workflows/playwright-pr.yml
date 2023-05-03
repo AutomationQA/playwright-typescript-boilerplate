@@ -1,0 +1,48 @@
+name: Playwright Tests For PR
+on:
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: create env file
+      run: cp .env.template .env
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: install dependencies
+      run: npm ci
+
+    - name: install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: create test change list per pull_request
+      if: github.event.pull_request
+      run: |
+        echo "Creating a list of tests that have changed"
+        FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} | grep ".spec.ts" | tr '\n' ' ')
+        echo "CHANGED=$FILES" >> $GITHUB_ENV
+
+    - name: run Playwright tests
+      run: |
+        echo "CHANGED = ${{ env.CHANGED }}"
+        echo "The github event is: ${{ github.event_name }}"
+        npm run test ${{ env.CHANGED }}
+
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30

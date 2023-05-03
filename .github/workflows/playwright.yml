@@ -2,26 +2,32 @@ name: Playwright Tests
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
 jobs:
   test:
-    timeout-minutes: 60
+    timeout-minutes: 10
     runs-on: ubuntu-latest
+    
     steps:
+
     - name: checkout repository
       uses: actions/checkout@v3
+
     - name: create env file
       run: cp .env.template .env
+
     - uses: actions/setup-node@v3
       with:
         node-version: 18
-    - name: Install dependencies
+
+    - name: install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
+
+    - name: install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
+
+    - name: run Playwright tests
       run: npm run test
+
     - uses: actions/upload-artifact@v3
       if: always()
       with:

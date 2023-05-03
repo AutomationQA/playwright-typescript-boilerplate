@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Tests For PR
 on:
   pull_request:
     branches: [ main, master ]
@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
+
     - name: checkout repository
       uses: actions/checkout@v3
       with:

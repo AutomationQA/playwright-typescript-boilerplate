@@ -18,8 +18,5 @@ test.describe("Another Demo purposes", () => {
       await cartPage.expect.toBeOnYourCartPage();
       await cartPage.checkout();
     });
-    logger.info(
-      "only for test github action purpose, will remove/rever this line"
-    );
   });
 });

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test",
+    "test": "playwright test --project=chromium",
     "smokeTest": "playwright test --grep @smoke --project=chromium"
   },
   "keywords": [],
